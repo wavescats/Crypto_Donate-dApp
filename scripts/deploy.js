@@ -5,8 +5,6 @@ async function main() {
   const MoneyGifts = await MoneyMeGifts.deploy();
 
   await MoneyGifts.deployed();
-
-  console.log("MoneyGifts deployed to:", MoneyGifts.address);
 }
 
 main()

@@ -112,7 +112,7 @@ const MoneyGiftsAbi = [
   },
 ];
 
-export const MoneyGiftsAddress = "0x7026684Ef8642cE1b66886D28A86633D53aAD056";
+export const MoneyGiftsAddress = "0x2289b22Be96BbbB74B723dA0cC4bA182bD2AD72B";
 
 export const web3 = new Web3(window.ethereum);
 

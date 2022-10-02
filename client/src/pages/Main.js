@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 function Main({ currentAccount, connectWallet }) {
   let str = currentAccount;
   let acc = str.slice(0, 6) + "..." + str.slice(38, 42).toUpperCase();
-  console.log(acc);
 
   return (
     <>
