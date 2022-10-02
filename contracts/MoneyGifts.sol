@@ -64,4 +64,8 @@ contract MoneyGifts {
         // 쌓여있는 잔고를 컨트랙트 배포자에게 송금
         // 누구나 호출할 수 있지만 컨트랙트 배포자에게만 돈을 보낼 수 있는 기능
     }
+
+    function withdrawBalance() public view returns(uint){
+        return address(this).balance;
+    }
 }
