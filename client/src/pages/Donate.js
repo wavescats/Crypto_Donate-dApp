@@ -1,57 +1,91 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { MoneyGiftsContract } from "../abi/contract";
+import "../styles/Donate.css";
 
 function Donate({ currentAccount }) {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const [time, setTime] = useState([]);
+  const [donateBalance, setDonateBalance] = useState("");
+  const [read, setRead] = useState([]);
 
   const onNameChange = e => {
     setName(e.target.value);
-    console.log(name);
   };
 
   const onMessageChange = e => {
     setMessage(e.target.value);
-    console.log(message);
   };
 
   const moneyGifts = async () => {
-    const gift = await MoneyGiftsContract.methods
+    await MoneyGiftsContract.methods
       .GiftsMeg(name, message)
       .send({ from: currentAccount, value: ethers.utils.parseEther("0.001") });
 
-    console.log(gift);
+    const memos = await MoneyGiftsContract.methods.getMemos().call();
+    setRead(memos);
+
+    const balan = await MoneyGiftsContract.methods.withdrawBalance().call();
+    let bals = (balan / 10 ** 18).toFixed(6);
+    setDonateBalance(bals);
   };
 
   const withdraw = async () => {
-    const withdraws = await MoneyGiftsContract.methods
+    await MoneyGiftsContract.methods
       .withdrawTips()
       .send({ from: currentAccount });
-
-    console.log(withdraws);
   };
-
-  const getMemos = async () => {
-    const memos = await MoneyGiftsContract.methods.getMemos().call();
-
-    console.log(memos);
-    for (let i = 0; i < memos.length; i++) {
-      setTime(memos[i].timestamp);
-    }
-  };
-  console.log(time);
 
   return (
-    <div>
-      <input onChange={onNameChange} placeholder="이름" />
-      <input onChange={onMessageChange} placeholder="남기는말" />
-      <button onClick={moneyGifts}>돈주기</button>
-      <button onClick={getMemos}>조회</button>
-      <button onClick={withdraw}>정산</button>
-      {time}
-    </div>
+    <>
+      <div className="donate_container">
+        <div className="donate_wrapper">
+          <div className="flex_container">
+            <span className="title_name">Sender / Name</span>
+            <input
+              className="input_area"
+              onChange={onNameChange}
+              placeholder="Name"
+            />
+            <br />
+            <span className="title_name">Sender / Message</span>
+            <textarea
+              className="input_area"
+              onChange={onMessageChange}
+              placeholder="Message . . ."
+              style={{ height: "5rem" }}
+            />
+            <br />
+          </div>
+          <button className="donate_btn" onClick={moneyGifts}>
+            Donate
+          </button>
+          <br />
+
+          {currentAccount &&
+            read.map((memo, idx) => {
+              return (
+                <div className="donate_map" key={idx}>
+                  <p>" {memo.message} "</p>
+                  <p>From: {memo.name}</p>
+                </div>
+              );
+            })}
+        </div>
+
+        <button
+          className="withdraw_btn"
+          onClick={withdraw}
+          style={{ background: "#999", padding: "5px" }}
+        >
+          Withdraw
+        </button>
+        <span style={{ color: "#111" }}>
+          {" "}
+          Donate Balance : " {donateBalance} " ETH
+        </span>
+      </div>
+    </>
   );
 }
 

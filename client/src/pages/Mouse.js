@@ -18,6 +18,7 @@ export default function Mouse() {
         className="layer"
         src="1.png"
         data-speed="-1"
+        alt=""
         style={{
           width: "100px",
           height: "100px",
@@ -27,36 +28,42 @@ export default function Mouse() {
         className="layer"
         src="2.png"
         data-speed="4"
+        alt=""
         style={{ width: "100px", height: "100px" }}
       />
       <img
         className="layer"
         src="7.png"
         data-speed="1"
+        alt=""
         style={{ width: "100px", height: "100px" }}
       />
       <img
         className="layer"
         src="4.png"
         data-speed="2"
+        alt=""
         style={{ width: "150px", height: "100px" }}
       />
       <img
         className="layer"
         src="5.png"
         data-speed="-2"
+        alt=""
         style={{ width: "140px", height: "100px" }}
       />
       <img
         className="layer"
         src="6.png"
         data-speed="-6"
+        alt=""
         style={{ width: "40px", height: "70px" }}
       />
       <img
         className="layer"
         src="3.png"
         data-speed="3"
+        alt=""
         style={{ width: "150px", height: "100px" }}
       />
       <div

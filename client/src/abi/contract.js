@@ -2,6 +2,24 @@ import Web3 from "web3";
 
 const MoneyGiftsAbi = [
   {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_message",
+        type: "string",
+      },
+    ],
+    name: "GiftsMeg",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
     inputs: [],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -38,21 +56,10 @@ const MoneyGiftsAbi = [
     type: "event",
   },
   {
-    inputs: [
-      {
-        internalType: "string",
-        name: "_name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_message",
-        type: "string",
-      },
-    ],
-    name: "GiftsMeg",
+    inputs: [],
+    name: "withdrawTips",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -92,14 +99,20 @@ const MoneyGiftsAbi = [
   },
   {
     inputs: [],
-    name: "withdrawTips",
-    outputs: [],
-    stateMutability: "nonpayable",
+    name: "withdrawBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ];
 
-export const MoneyGiftsAddress = "0x9bADD7AB6c2d6929bf8483Db8aBD9D71EFd49E29";
+export const MoneyGiftsAddress = "0x7026684Ef8642cE1b66886D28A86633D53aAD056";
 
 export const web3 = new Web3(window.ethereum);
 

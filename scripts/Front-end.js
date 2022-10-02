@@ -8,7 +8,7 @@ async function getBalance(provider, address) {
 
 async function main() {
   // Goerli 테스트넷에 배포된 주소 / ABI
-  const contractAddress = "0x9bADD7AB6c2d6929bf8483Db8aBD9D71EFd49E29";
+  const contractAddress = "0x7026684Ef8642cE1b66886D28A86633D53aAD056";
   const contractABI = abi.abi;
 
   // Get the node connection and wallet connection.
