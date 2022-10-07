@@ -3,7 +3,7 @@ import "../styles/Main.css";
 import Mouse from "./Mouse";
 import { Link } from "react-router-dom";
 
-function Main({ currentAccount, connectWallet }) {
+function Main({ currentAccount, connectWallet, disConnectWallet }) {
   let str = currentAccount;
   let acc = str.slice(0, 6) + "..." + str.slice(38, 42).toUpperCase();
 
@@ -19,8 +19,9 @@ function Main({ currentAccount, connectWallet }) {
             <div
               className="wallet_connect"
               style={{ background: "rgb(61, 205, 0)" }}
+              onClick={disConnectWallet}
             >
-              {acc}
+              <span style={{ fontSize: "1rem" }}>{acc}</span>Disconnect
             </div>
           ) : (
             <div className="wallet_connect" onClick={connectWallet}>
@@ -30,11 +31,7 @@ function Main({ currentAccount, connectWallet }) {
           <br />
           {currentAccount ? (
             <Link to="/donate">
-              <div
-                className="wallet_connect"
-                style={{ background: "#111" }}
-                currentAccount={currentAccount}
-              >
+              <div className="wallet_connect" style={{ background: "#111" }}>
                 DONATE
               </div>
             </Link>

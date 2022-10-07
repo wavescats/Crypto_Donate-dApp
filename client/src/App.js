@@ -1,28 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Donate from "./pages/Donate";
 import Main from "./pages/Main";
 
 function App() {
-  const [currentAccount, setCurrentAccount] = useState("");
+  const [userAccount, setUserAccount] = useState({
+    isConnect: "",
+    Account: "",
+  });
 
-  const connectWallet = async () => {
-    try {
-      const { ethereum } = window;
-
-      if (!ethereum) {
-        console.log("please install MetaMask");
-      }
-
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-
-      setCurrentAccount(accounts[0]);
-    } catch (error) {
-      console.log(error);
+  let walletConnect = async () => {
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    if (accounts.length > 0) {
+      localStorage.setItem("isConnected", accounts);
+      setUserAccount({ Account: accounts[0] });
+    }
+    if (accounts.length === undefined) {
+      localStorage.removeItem("isConnected");
+      setUserAccount({ Account: "" });
     }
   };
+
+  const getCurrentWalletConnected = async () => {
+    if (window.ethereum) {
+      try {
+        const addressArray = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+        console.log(addressArray);
+        if (addressArray.length > 0) {
+          setUserAccount({ Account: addressArray[0] });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+  async function logout() {
+    localStorage.removeItem("isConnected");
+    setUserAccount({ Account: "" });
+  }
+
+  useEffect(() => {
+    if (userAccount.Account !== "") {
+      getCurrentWalletConnected();
+    }
+  }, []);
 
   return (
     <>
@@ -32,14 +58,15 @@ function App() {
             path="/"
             element={
               <Main
-                currentAccount={currentAccount}
-                connectWallet={connectWallet}
+                currentAccount={userAccount.Account}
+                connectWallet={walletConnect}
+                disConnectWallet={logout}
               />
             }
           />
           <Route
             path="/donate"
-            element={<Donate currentAccount={currentAccount} />}
+            element={<Donate currentAccount={userAccount.Account} />}
           />
         </Routes>
       </Router>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { MoneyGiftsContract } from "../abi/contract";
 import "../styles/Donate.css";
@@ -24,10 +24,6 @@ function Donate({ currentAccount }) {
 
     const memos = await MoneyGiftsContract.methods.getMemos().call();
     setRead(memos);
-
-    const balan = await MoneyGiftsContract.methods.withdrawBalance().call();
-    let bals = (balan / 10 ** 18).toFixed(6);
-    setDonateBalance(bals);
   };
 
   const withdraw = async () => {
@@ -35,6 +31,15 @@ function Donate({ currentAccount }) {
       .withdrawTips()
       .send({ from: currentAccount });
   };
+
+  useEffect(() => {
+    async function baln() {
+      const balan = await MoneyGiftsContract.methods.withdrawBalance().call();
+      let bals = (balan / 10 ** 18).toFixed(6);
+      setDonateBalance(bals);
+    }
+    baln();
+  }, []);
 
   return (
     <>
