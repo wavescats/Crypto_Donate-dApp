@@ -29,7 +29,7 @@ function App() {
         const addressArray = await window.ethereum.request({
           method: "eth_accounts",
         });
-        console.log(addressArray);
+
         if (addressArray.length > 0) {
           setUserAccount({ Account: addressArray[0] });
         }
@@ -39,13 +39,13 @@ function App() {
     }
   };
 
-  async function logout() {
+  function logout() {
     localStorage.removeItem("isConnected");
     setUserAccount({ Account: "" });
   }
 
   useEffect(() => {
-    if (userAccount.Account !== "") {
+    if (userAccount.Account !== null) {
       getCurrentWalletConnected();
     }
   }, []);
