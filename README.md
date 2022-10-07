@@ -43,6 +43,6 @@
 
 <br>
 
-https://wavescats.github.io/project/2022/10/03/pj5.html<br>
+https://wavescats.github.io/project/2022/10/02/pj5.html<br>
 <br>
 (👆 시연 영상 참고)
